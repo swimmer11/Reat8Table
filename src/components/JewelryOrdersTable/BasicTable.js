@@ -1,5 +1,5 @@
 import React from "react";
-// import "./table.css";
+import "./table.css";
 import {
   useReactTable,
   flexRender,
@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-table";
 import { columnDef } from "./columns";
 import dataJSON from "./data.json";
+import "./JewelryOrdersTable.css";
 
 const BasicTable = () => {
   const finalData = React.useMemo(() => dataJSON, []);
@@ -18,10 +19,12 @@ const BasicTable = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  //   console.log("test", tableInstance.getHeaderGroups());
+
 
   return (
     <>
+
+    <div className="table">
       <table>
         <thead>
           {tableInstance.getHeaderGroups().map((headerEl) => {
@@ -62,6 +65,7 @@ const BasicTable = () => {
           })}
         </tbody>
       </table>
+     </div>   
     </>
   );
 };
