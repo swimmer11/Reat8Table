@@ -1,13 +1,15 @@
 import React from "react";
-import "./table.css";
+import "../../ProjectCSS/reactTable.css";
+
 import {
   useReactTable,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import { columnDef } from "./columns";
 import dataJSON from "./data.json";
-import "./JewelryOrdersTable.css";
+
 
 const BasicTable = () => {
   const finalData = React.useMemo(() => dataJSON, []);
@@ -17,6 +19,7 @@ const BasicTable = () => {
     columns: finalColumnDef,
     data: finalData,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
 
@@ -65,6 +68,48 @@ const BasicTable = () => {
           })}
         </tbody>
       </table>
+
+      <div className="pagination">
+      <strong>
+                
+                Page{' '}
+               {tableInstance.options.state.pagination.pageIndex} of {' '}
+               {tableInstance.getPageCount() - 1}
+       </strong>
+       |
+     <div>
+       Go to page:
+        
+      <input className="pagination_button"  
+       type="text"
+        defaultValue={ tableInstance.options.state.pagination.pageIndex}
+        onChange={(e) => tableInstance.setPageIndex(e.target.value)}
+        style={{ width: '25px', height:'15px' }}
+
+      />
+    </div>  
+
+           <button className="pagination_button"  onClick={() => tableInstance.previousPage()}
+          disabled={!tableInstance.getCanPreviousPage()}> {'<< Previous'} </button>
+            <button className="pagination_button" onClick={() => tableInstance.nextPage()}
+           disabled={!tableInstance.getCanNextPage()}> {'Next>>'} 
+              </button>
+           
+      <select className="pagination_button"
+        value={tableInstance.options.state.pagination.pageSize}
+        onChange={(e) => tableInstance.setPageSize(e.target.value)}
+      > 
+        
+        {[10, 20, 50,100].map((pageSizeEl) => {
+          return (
+            <option key={pageSizeEl} value={pageSizeEl}>
+       Show {pageSizeEl}
+            </option>
+          );
+        })}
+      </select>
+   
+      </div>
      </div>   
     </>
   );
