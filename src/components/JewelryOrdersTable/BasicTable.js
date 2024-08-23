@@ -1,11 +1,18 @@
 import React from "react";
 import "../../ProjectCSS/reactTable.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSortDown,
+  faSortUp,
+  faSort,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   useReactTable,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import { columnDef } from "./columns";
 import dataJSON from "./data.json";
@@ -15,11 +22,19 @@ const BasicTable = () => {
   const finalData = React.useMemo(() => dataJSON, []);
   const finalColumnDef = React.useMemo(() => columnDef, []);
 
+  const [sorting, setSorting] = React.useState([]);
+
   const tableInstance = useReactTable({
     columns: finalColumnDef,
     data: finalData,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting: sorting,
+    },
+    onSortingChange: setSorting,
+
   });
 
 
@@ -35,13 +50,25 @@ const BasicTable = () => {
               <tr key={headerEl.id}>
                 {headerEl.headers.map((columnEl) => {
                   return (
-                    <th key={columnEl.id} colSpan={columnEl.colSpan}>
+
+                    <th
+                      key={columnEl.id}
+                      colSpan={columnEl.colSpan}
+                      onClick={columnEl.column.getToggleSortingHandler()}
+                    >
                       {columnEl.isPlaceholder
                         ? null
                         : flexRender(
                             columnEl.column.columnDef.header,
                             columnEl.getContext()
                           )}
+                      {/* CODE FOR UP AND DOWN SORTING */}
+                      {
+                        { 
+                          asc: <FontAwesomeIcon icon={faSortUp} size="2x"/>, desc: <FontAwesomeIcon icon={faSortDown} size="2x" />,}[
+                          columnEl.column.getIsSorted() ?? null
+                        ]
+                      }
                     </th>
                   );
                 })}
