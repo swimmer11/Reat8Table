@@ -17,14 +17,16 @@ import {
 } from "@tanstack/react-table";
 import { columnDef } from "./columns";
 import dataJSON from "./data.json";
+import { Form } from 'react-bootstrap';
 
 const BasicTable = () => {
-  const finalData = React.useMemo(() => dataJSON, []);
-  const finalColumnDef = React.useMemo(() => columnDef, []);
+  const finalData = React.useMemo(() => dataJSON, [])
+  const finalColumnDef = React.useMemo(() => columnDef, [])
 
   const [sorting, setSorting] = React.useState([]);
-  const [columnFilters, setColumnFilters] = React.useState([]);
-
+  const [columnFilters, setColumnFilters] = React.useState([])
+  const [globalFilter, setGlobalFilter] = React.useState('')
+  
   const tableInstance = useReactTable({
     columns: finalColumnDef,
     data: finalData,
@@ -35,14 +37,30 @@ const BasicTable = () => {
     state: {
       sorting: sorting,
       columnFilters: columnFilters,
+      globalFilter: globalFilter,
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
   });
 
   return (
-    <div className="table">
+    <div  style={{ marginLeft: '50px'}}>
+     
+     <div className="search-box">
+       {/* Global Filter Input Field */}
+       Search all columns:
+        <input
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+            style={{ marginLeft: '10px', width: '200px' }}
+        />
+      </div>
+      
       <table>
+
+       
+      
         <thead>
           {tableInstance.getHeaderGroups().map((headerEl) => (
             <tr key={headerEl.id}>
