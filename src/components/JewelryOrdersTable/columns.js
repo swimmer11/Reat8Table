@@ -6,6 +6,7 @@ const columnHelper = createColumnHelper();
 export const columnDef = [
   columnHelper.accessor("id", {
     header: "Id",
+    type: "number",
   }),
   {
     accessorKey:"first_name",
