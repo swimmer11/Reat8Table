@@ -5,6 +5,7 @@ import {
   faSortDown,
   faSortUp,
   faSort,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -17,9 +18,9 @@ import {
 } from "@tanstack/react-table";
 import { columnDef } from "./columns";
 import dataJSON from "./data.json";
-import { Form } from 'react-bootstrap';
 
-const BasicTable = () => {
+
+const JewelryOrdersTable = () => {
   const finalData = React.useMemo(() => dataJSON, [])
   const finalColumnDef = React.useMemo(() => columnDef, [])
 
@@ -45,17 +46,37 @@ const BasicTable = () => {
   });
 
   return (
+
     <div  style={{ marginLeft: '50px'}}>
      
-     <div className="search-box">
-       {/* Global Filter Input Field */}
-       Search all columns:
+   <div className="search-box" style={{ position: 'relative', display: 'inline-block' }}>
+
+   <strong>Search all columns:</strong> 
+     
+      <div style={{ position: 'relative' }}>
         <input
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-            style={{ marginLeft: '10px', width: '200px' }}
+          style={{
+            paddingLeft: '30px', // Add space to the left to make room for the icon
+            width: '200px',
+            boxSizing: 'border-box' // Ensure padding is included in width
+          }}
+        />
+        <FontAwesomeIcon
+          icon={faMagnifyingGlass}
+          size="1x"
+          style={{
+            position: 'absolute',
+            left: '10px', // Position the icon inside the input field
+            top: '50%',
+            transform: 'translateY(-50%)', // Vertically center the icon
+            pointerEvents: 'none' // Ensures the icon does not affect input field interaction
+          }}
         />
       </div>
+    </div>
+    
       
       <table>
 
@@ -180,4 +201,4 @@ const BasicTable = () => {
   );
 };
 
-export default BasicTable;
+export default JewelryOrdersTable;

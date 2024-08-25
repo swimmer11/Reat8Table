@@ -2,13 +2,13 @@ import React from "react";
 import "./App.css";
 
 // components
-import BasicTable from "./components/JewelryOrdersTable/BasicTable";
+import JewelryOrdersTable from "./components/JewelryOrdersTable/JewelryOrdersTable";
 
 
 function App() {
   return (
     <div>
-      <BasicTable />
+      <JewelryOrdersTable />
       
     </div>
   );
