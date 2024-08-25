@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "../../ProjectCSS/reactTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,16 +22,18 @@ import dataJSON from "./data.json";
 
 
 const JewelryOrdersTable = () => {
-  const finalData = React.useMemo(() => dataJSON, [])
+  const importedData = React.useMemo(() => dataJSON, [])
   const finalColumnDef = React.useMemo(() => columnDef, [])
 
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([])
   const [globalFilter, setGlobalFilter] = React.useState('')
+  const [data, setData] = useState(importedData);
+
   
   const tableInstance = useReactTable({
     columns: finalColumnDef,
-    data: finalData,
+    data: data,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -40,11 +43,25 @@ const JewelryOrdersTable = () => {
       columnFilters: columnFilters,
       globalFilter: globalFilter,
     },
+    meta: {
+      updateData: (rowIndex, columnId, value) =>
+        setData((prev) =>
+          prev.map((row, index) =>
+            index === rowIndex
+              ? {
+                  ...prev[rowIndex],
+                  [columnId]: value,
+                }
+              : row
+          )
+        ),
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
   });
 
+  console.log(data)
   return (
 
     <div  style={{ marginLeft: '50px'}}>

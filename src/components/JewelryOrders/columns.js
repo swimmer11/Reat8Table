@@ -1,4 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import EditableCell from "../GeneralTable/EditableCell";
+
 
 
 const columnHelper = createColumnHelper();
@@ -11,10 +13,12 @@ export const columnDef = [
   {
     accessorKey:"first_name",
     header: "First Name",
+    cell: EditableCell,
   },
   {
     accessorKey: "last_name",
     header: "Last Name",
+    
   },
   {
     accessorKey: "email",

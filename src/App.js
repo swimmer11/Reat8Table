@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 // components
-import JewelryOrdersTable from "./components/JewelryOrdersTable/JewelryOrdersTable";
+import JewelryOrdersTable from "./components/JewelryOrders/JewelryOrdersTable";
 
 
 function App() {
